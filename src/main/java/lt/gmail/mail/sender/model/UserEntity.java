@@ -1,5 +1,6 @@
 package lt.gmail.mail.sender.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.*;
@@ -31,8 +32,8 @@ public class UserEntity implements UserDetails {
 
 	private String token;
 	
-	@ManyToMany(targetEntity = UserRoleEnitity.class)
-	private List<UserRoleEnitity> roles;
+	@ManyToMany(targetEntity = UserRoleEntity.class)
+	private List<UserRoleEntity> roles = new ArrayList<UserRoleEntity>();
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -96,11 +97,11 @@ public class UserEntity implements UserDetails {
 		this.token = token;
 	}
 
-	public List<UserRoleEnitity> getRoles() {
+	public List<UserRoleEntity> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<UserRoleEnitity> roles) {
+	public void setRoles(List<UserRoleEntity> roles) {
 		this.roles = roles;
 	}
 

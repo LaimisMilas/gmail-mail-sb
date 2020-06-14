@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import lt.gmail.mail.sender.exception.RecordNotFoundException;
-import lt.gmail.mail.sender.model.UserRoleEnitity;
+import lt.gmail.mail.sender.model.UserRoleEntity;
 import lt.gmail.mail.sender.service.UserRoleService;
 
 @CrossOrigin
@@ -27,26 +27,26 @@ public class UserRoleController {
 	UserRoleService service;
 
 	@RequestMapping("/userroles")
-	public ResponseEntity<List<UserRoleEnitity>> getAll() {
-		List<UserRoleEnitity> list = service.getAll();
+	public ResponseEntity<List<UserRoleEntity>> getAll() {
+		List<UserRoleEntity> list = service.getAll();
 
-		return new ResponseEntity<List<UserRoleEnitity>>(list, new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<List<UserRoleEntity>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 
 	@RequestMapping("/userroles/{id}")
-	public ResponseEntity<UserRoleEnitity> getById(@PathVariable Long id) throws RecordNotFoundException {
-		UserRoleEnitity entity = service.getById(id);
+	public ResponseEntity<UserRoleEntity> getById(@PathVariable Long id) throws RecordNotFoundException {
+		UserRoleEntity entity = service.getById(id);
 
-		return new ResponseEntity<UserRoleEnitity>(entity, new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<UserRoleEntity>(entity, new HttpHeaders(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/userroles", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void create(@RequestBody UserRoleEnitity entity) throws RecordNotFoundException {
+	public void create(@RequestBody UserRoleEntity entity) throws RecordNotFoundException {
 		service.createOrUpdate(entity);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/userroles", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void update(@RequestBody UserRoleEnitity entity) throws RecordNotFoundException {
+	public void update(@RequestBody UserRoleEntity entity) throws RecordNotFoundException {
 		service.createOrUpdate(entity);
 	}
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lt.gmail.mail.sender.exception.RecordNotFoundException;
-import lt.gmail.mail.sender.model.UserRoleEnitity;
+import lt.gmail.mail.sender.model.UserRoleEntity;
 import lt.gmail.mail.sender.repository.UserRoleRepository;
 
  
@@ -17,20 +17,20 @@ public class UserRoleService {
     @Autowired
     UserRoleRepository repository;
      
-    public List<UserRoleEnitity> getAll()
+    public List<UserRoleEntity> getAll()
     {
-        List<UserRoleEnitity> list = repository.findAll();
+        List<UserRoleEntity> list = repository.findAll();
          
         if(list.size() > 0) {
             return list;
         } else {
-            return new ArrayList<UserRoleEnitity>();
+            return new ArrayList<UserRoleEntity>();
         }
     }
      
-    public UserRoleEnitity getById(Long id) throws RecordNotFoundException
+    public UserRoleEntity getById(Long id) throws RecordNotFoundException
     {
-        Optional<UserRoleEnitity> entity = repository.findById(id);
+        Optional<UserRoleEntity> entity = repository.findById(id);
          
         if(entity.isPresent()) {
             return entity.get();
@@ -39,13 +39,13 @@ public class UserRoleService {
         }
     }
      
-    public UserRoleEnitity createOrUpdate(UserRoleEnitity entity) throws RecordNotFoundException
+    public UserRoleEntity createOrUpdate(UserRoleEntity entity) throws RecordNotFoundException
     {
-        Optional<UserRoleEnitity> reservation = repository.findById(entity.getId());
+        Optional<UserRoleEntity> reservation = repository.findById(entity.getId());
          
         if(reservation.isPresent())
         {
-        	UserRoleEnitity newEntity = reservation.get();
+        	UserRoleEntity newEntity = reservation.get();
             newEntity.setId(entity.getId());
             newEntity.setRole(entity.getRole());
             
@@ -61,7 +61,7 @@ public class UserRoleService {
      
     public void deleteById(Long id) throws RecordNotFoundException
     {
-        Optional<UserRoleEnitity> entity = repository.findById(id);
+        Optional<UserRoleEntity> entity = repository.findById(id);
          
         if(entity.isPresent())
         {
@@ -70,4 +70,8 @@ public class UserRoleService {
             throw new RecordNotFoundException("No Message record exist for given id");
         }
     }
+
+	public UserRoleEntity getByName(String roleName) {
+		return repository.getByName(roleName);
+	}
 }

@@ -50,7 +50,7 @@
           </collectionProp>
         </ModuleController>
         <hashTree/>
-        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Call CompanyInfo" enabled="true">
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Call CompanyInfo" enabled="false">
           <collectionProp name="ModuleController.node_path">
             <stringProp name="764597751">Test Plan</stringProp>
             <stringProp name="764597751">Test Plan</stringProp>
