@@ -16,6 +16,7 @@ import com.google.api.services.gmail.Gmail;
 import lt.gmail.mail.sender.gmail.send.email.SendToCompanysViaGmail;
 import lt.gmail.mail.sender.gmail.send.email.SendValidator;
 import lt.gmail.mail.sender.model.CompanyInfoEntity;
+import lt.gmail.mail.sender.model.GmailAPISettingEntity;
 import lt.gmail.mail.sender.model.GmailCampaignEntity;
 import lt.gmail.mail.sender.repository.SendRegRepository;
 
@@ -25,11 +26,13 @@ public class CompaignManageService {
 	@Autowired
 	GmailCampaignService gmailCampaignService;
 	@Autowired
+	GmailApiSettingService apiSettingService;
+	@Autowired
 	private SendRegRepository sendRegRepository;
 	@Autowired
 	private SendValidator sendValidator;
-
-	private Gmail gmailService;
+	
+	private Map<Long, Gmail> gmailServices = new HashMap<Long, Gmail>();
 	private Map<Long, String> itemsCFLogs = new HashMap<Long, String>();
 	private Map<Long, CompletableFuture<SendToCompanysViaGmail>> itemsCF = new HashMap<Long, CompletableFuture<SendToCompanysViaGmail>>();
 
@@ -45,13 +48,21 @@ public class CompaignManageService {
 		mailSender.setCompanyInfos(companyInfos);
 		mailSender.setEmailContent(compaign.getGmailHTML().getHtmlContent());
 		mailSender.setLogKey(compaign.getLogKey());
-		mailSender.setService(gmailService);
+		mailSender.setService(getGmailService(compaign.getUserId()));
 		mailSender.setSendRegRepository(sendRegRepository);
 		mailSender.setSendValidator(sendValidator);
 		mailSender.setStop(false);
 		mailSender.setRunTest(true);
+		mailSender.setTimeToWait(14000);
 		mailSender.setLimit(1000);
 		runCompaignAsync(compaign.getId(), mailSender);
+	}
+
+	private Gmail getGmailService(Long userId) {
+		GmailAPISettingEntity setting = apiSettingService.getDefaulByUserId(userId);
+		Gmail result = null;
+		result  = gmailServices.get(setting.getId());
+		return result;
 	}
 
 	@Async
@@ -102,6 +113,8 @@ public class CompaignManageService {
 				result =  result + ", LookByStatus: " + sender.isLookByStatus();
 				result =  result + ", RunTest: " + sender.isRunTest();
 				result =  result + ", Stop: " + sender.isStop();
+				result =  result + ", GmailService: " + (sender.getService() == null? "Is Null" : "Exist");
+				
 			}
 
 		} catch (Exception e) {
@@ -145,17 +158,16 @@ public class CompaignManageService {
 		return result;
 	}
 
-	public void setService(Gmail gmail) {
-		this.gmailService = gmail;
+	public void setService(Long configId, Gmail gmail) {
+		gmailServices.put(configId, gmail);
 	}
 
 	public String senderManagerStatus() {
 		String result = "";
 		result = result + "Compaigns itemsCF size: " + itemsCF.size();
 		result = result + ", Compaigns itemsCF keySet: " + itemsCF.keySet();
-		result = result + ", GmailService: " + (gmailService == null ? "null": "not null");
-		if(gmailService != null) {
-			result = result + "GmailService ApplicationName: " + gmailService.getApplicationName();
+		for (Entry<Long, Gmail> gmailService : gmailServices.entrySet()) {
+			result = result + (", GmailAPISetting Id: " + gmailService.getKey());
 		}
 		for (Entry<Long, String> entry : itemsCFLogs.entrySet()) {
 			entry.getValue();

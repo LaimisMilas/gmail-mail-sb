@@ -1,7 +1,7 @@
 package lt.gmail.mail.sender.web;
 
 import java.util.Collections;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +47,7 @@ public class GMailAuthController {
 	private String clientSecret;
 	private String redirectUri;
 	private String scope;
+	private Long configId;
 	
 	@Autowired
 	CompaignManageService cms;
@@ -55,16 +56,18 @@ public class GMailAuthController {
 
 	@RequestMapping(value = "/login/gmail/{id}", method = RequestMethod.GET)
 	public RedirectView googleConnectionStatus(@PathVariable("id") Long id) throws Exception {
-		GmailAPISettingEntity config = gmailApiSettingService.getByUserId(id);
+		List<GmailAPISettingEntity> configs = gmailApiSettingService.getByUserId(id);
 		
-		if(config != null) {
-			this.clientId = config.getClientId();
-			this.clientSecret = config.getClientSecret();
-			this.redirectUri = config.getRedirectUri();
-			this.applicationName = config.getApplicationName();
-			this.scope = config.getScope();
+		for (GmailAPISettingEntity config : configs) {
+			if(config != null && config.isDefaultConfig()) {
+				this.clientId = config.getClientId();
+				this.clientSecret = config.getClientSecret();
+				this.redirectUri = config.getRedirectUri();
+				this.applicationName = config.getApplicationName();
+				this.scope = config.getScope();
+				this.configId = config.getId();
+			}	
 		}
-		
 		return new RedirectView(authorize());
 	}
 
@@ -75,7 +78,7 @@ public class GMailAuthController {
 			TokenResponse response = flow.newTokenRequest(code).setRedirectUri(redirectUri).execute();
 			credential = flow.createAndStoreCredential(response, "userID");
 
-			cms.setService(new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
+			cms.setService(this.configId, new Gmail.Builder(httpTransport, JSON_FACTORY, credential)
 					.setApplicationName(applicationName).build());
 			
 

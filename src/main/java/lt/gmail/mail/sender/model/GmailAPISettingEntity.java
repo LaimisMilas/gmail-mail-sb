@@ -19,6 +19,9 @@ public class GmailAPISettingEntity {
 	@Column(name = "client_id")
 	private String clientId;
 	
+	@Column(name = "default_config")
+	private boolean defaultConfig;
+	
 	@Column(name = "client_secret")
 	private String clientSecret;
 	
@@ -112,6 +115,10 @@ public class GmailAPISettingEntity {
 	public void setPreferTokenInfo(String preferTokenInfo) {
 		this.preferTokenInfo = preferTokenInfo;
 	}
-	
-	
+	public boolean isDefaultConfig() {
+		return defaultConfig;
+	}
+	public void setDefaultConfig(boolean defaultConfig) {
+		this.defaultConfig = defaultConfig;
+	}
 }

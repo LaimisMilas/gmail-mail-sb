@@ -53,6 +53,7 @@ public class GmailApiSettingService {
             newEntity.setClientAuthenticationScheme(entity.getClientAuthenticationScheme());            
             newEntity.setPreferTokenInfo(entity.getPreferTokenInfo());            
             newEntity.setScope(entity.getScope());
+            newEntity.setDefaultConfig(entity.isDefaultConfig());
             newEntity.setUserAuthorizationUri(entity.getUserAuthorizationUri());
             
             newEntity = repository.save(newEntity);
@@ -74,8 +75,12 @@ public class GmailApiSettingService {
             throw new RecordNotFoundException("No GmailAPISettingEntity record exist for given id");
         }
     }
+    
+    public GmailAPISettingEntity getDefaulByUserId(Long id) {
+		return repository.getDefaulByUserId(id);
+	}
 
-	public GmailAPISettingEntity getByUserId(Long id) {
+	public List<GmailAPISettingEntity> getByUserId(Long id) {
 		return repository.getByUserId(id);
 	}
 }
