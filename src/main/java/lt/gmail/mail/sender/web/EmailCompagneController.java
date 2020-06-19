@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import lt.gmail.mail.sender.exception.RecordNotFoundException;
 import lt.gmail.mail.sender.model.GmailCampaignEntity;
-import lt.gmail.mail.sender.model.GmailHTMLEntity;
 import lt.gmail.mail.sender.service.GmailCampaignService;
 
 @CrossOrigin

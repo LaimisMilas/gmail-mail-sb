@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.securityContextRepository(appSecurityContext)
 		.and()
 		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+		.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 		.and()
 		.csrf().disable()
 		.formLogin().disable();

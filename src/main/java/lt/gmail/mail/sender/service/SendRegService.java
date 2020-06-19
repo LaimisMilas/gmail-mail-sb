@@ -72,4 +72,8 @@ public class SendRegService {
             throw new RecordNotFoundException("No Message record exist for given id");
         }
     }
+
+	public List<SendRegEntity> seachInLogs(String key) {
+		return repository.seachInLogs(key);
+	}
 }

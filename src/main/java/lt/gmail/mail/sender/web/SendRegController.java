@@ -40,6 +40,13 @@ public class SendRegController {
 		return new ResponseEntity<SendRegEntity>(entity, new HttpHeaders(), HttpStatus.OK);
 	}
 	
+	@RequestMapping("/send/regs/search/{logKey}")
+	public ResponseEntity<List<SendRegEntity>> getByKey(@PathVariable String logKey) throws RecordNotFoundException {
+		List<SendRegEntity> entity = service.seachInLogs(logKey);
+
+		return new ResponseEntity<List<SendRegEntity>>(entity, new HttpHeaders(), HttpStatus.OK);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST, value="/send/regs", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void create(@RequestBody SendRegEntity entity) throws RecordNotFoundException {
 		service.createOrUpdate(entity);
