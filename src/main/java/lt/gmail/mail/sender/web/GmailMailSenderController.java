@@ -61,5 +61,15 @@ public class GmailMailSenderController {
 	public String doSendStop(@PathVariable("id") Long id) {
 		return cManageService.stopSend(id);
 	}
+	
+	@RequestMapping("/set/send/limit/{id}/{limit}")
+	public String setLimit(@PathVariable("id") Long id, @PathVariable("limit") int limit) {
+		return cManageService.setLimit(id, limit);
+	}
+	
+	@RequestMapping("/set/time/to/wait/{id}/{timeToWait}")
+	public String setTimeToWait(@PathVariable("id") Long id, @PathVariable("timeToWait") int timeToWait) {
+		return cManageService.setTimeToWait(id, timeToWait);
+	}
 
 }

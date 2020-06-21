@@ -18,6 +18,7 @@ public class SendToCompanysViaGmail implements Runnable {
 	SendValidator sendValidator;
 	Gmail service;
 	List<CompanyInfoEntity> companyInfos;
+	Long compaignId;
 	String sendFrom = "me";
 	String subjectLine;
 	String emailContent;
@@ -154,6 +155,7 @@ public class SendToCompanysViaGmail implements Runnable {
 						}
 
 						SendRegEntity sendReg = new SendRegEntity();
+						sendReg.setCompaignId(compaignId);
 						sendReg.setCompanyCode(companyCode);
 						sendReg.setLogs(logKey + " " + companyInfoEmail +" companyInfoId "+ companyInfoId);
 						sendReg.setMessage(response.toPrettyString());
@@ -407,5 +409,13 @@ public class SendToCompanysViaGmail implements Runnable {
 
 	public void setDoStoreReg(boolean doStoreReg) {
 		this.doStoreReg = doStoreReg;
+	}
+
+	public Long getCompaignId() {
+		return compaignId;
+	}
+
+	public void setCompaignId(Long compaignId) {
+		this.compaignId = compaignId;
 	}
 }

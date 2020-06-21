@@ -55,6 +55,7 @@ public class CompaignManageService {
 		mailSender.setRunTest(true);
 		mailSender.setTimeToWait(14000);
 		mailSender.setLimit(1000);
+		mailSender.setCompaignId(compaign.getId());
 		runCompaignAsync(compaign.getId(), mailSender);
 	}
 
@@ -115,6 +116,38 @@ public class CompaignManageService {
 				result =  result + ", Stop: " + sender.isStop();
 				result =  result + ", GmailService: " + (sender.getService() == null? "Is Null" : "Exist");
 				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String setTimeToWait(Long id, int timeToWait) {
+		String result = "";
+		try {
+
+			if (itemsCF.get(id) != null) {
+				SendToCompanysViaGmail sender = itemsCF.get(id).get();
+				sender.setTimeToWait(timeToWait);
+				result = new Integer(sender.getTimeToWait()).toString();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String setLimit(Long id, int limit) {
+		String result = "";
+		try {
+
+			if (itemsCF.get(id) != null) {
+				SendToCompanysViaGmail sender = itemsCF.get(id).get();
+				sender.setLimit(limit);
+				result = new Integer(sender.getLimit()).toString();
 			}
 
 		} catch (Exception e) {

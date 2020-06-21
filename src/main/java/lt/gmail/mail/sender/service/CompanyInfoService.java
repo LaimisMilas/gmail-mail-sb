@@ -78,4 +78,28 @@ public class CompanyInfoService {
             throw new RecordNotFoundException("No CompanyInfoEntity record exist for given id");
         }
     }
+
+	public List<CompanyInfoEntity> searchByAddress(String address) {
+		return repository.searchByAddress(address);
+	}
+	
+	public List<CompanyInfoEntity> searchByEmail(String email) {
+		return repository.searchByEmail(email);
+	}
+	
+	public List<CompanyInfoEntity> searchByTitle(String title) {
+		return repository.searchByTitle(title);
+	}
+
+	public List<CompanyInfoEntity> searchByCode(String code) {
+		return repository.searchByCode(code);
+	}
+	
+	public List<CompanyInfoEntity> searchInRawData(String text) {
+		return repository.searchInRawData(text);
+	}
+
+	public List<CompanyInfoEntity> search(String colum, String text) {
+		return repository.search(colum, text);
+	}
 }

@@ -20,6 +20,8 @@ public class SendRegEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	private long compaignId;
+	
 	@Column(name="company_code")
 	private String companyCode;
 	
@@ -71,6 +73,14 @@ public class SendRegEntity {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public long getCompaignId() {
+		return compaignId;
+	}
+
+	public void setCompaignId(long compaignId) {
+		this.compaignId = compaignId;
 	}
 	
 	

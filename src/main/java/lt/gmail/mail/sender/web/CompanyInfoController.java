@@ -35,6 +35,30 @@ public class CompanyInfoController {
 		return new ResponseEntity<List<CompanyInfoEntity>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 
+	@RequestMapping("/company/info/search/{colum}/{text}")
+	public ResponseEntity<List<CompanyInfoEntity>> search(@PathVariable("colum") String colum, @PathVariable("text") String text) {
+		List<CompanyInfoEntity> list = service.search(colum,text);
+		return new ResponseEntity<List<CompanyInfoEntity>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@RequestMapping("/company/info/search/email/{email}")
+	public ResponseEntity<List<CompanyInfoEntity>> searchEmail(@PathVariable("email") String email) {
+		List<CompanyInfoEntity> list = service.searchByEmail(email);
+		return new ResponseEntity<List<CompanyInfoEntity>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
+
+	@RequestMapping("/company/info/search/address/{address}")
+	public ResponseEntity<List<CompanyInfoEntity>> searchAddress(@PathVariable("address") String address) {
+		List<CompanyInfoEntity> list = service.searchByAddress(address);
+		return new ResponseEntity<List<CompanyInfoEntity>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@RequestMapping("/company/info/search/rawData/{address}")
+	public ResponseEntity<List<CompanyInfoEntity>> searchInRawData(@PathVariable("text") String text) {
+		List<CompanyInfoEntity> list = service.searchInRawData(text);
+		return new ResponseEntity<List<CompanyInfoEntity>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
+	
 	@RequestMapping("/company/info/{id}")
 	public ResponseEntity<CompanyInfoEntity> getById(@PathVariable("id") Long id) throws RecordNotFoundException {
 		CompanyInfoEntity entity = service.getById(id);
