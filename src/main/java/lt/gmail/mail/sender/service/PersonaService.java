@@ -1,0 +1,75 @@
+package lt.gmail.mail.sender.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lt.gmail.mail.sender.exception.RecordNotFoundException;
+import lt.gmail.mail.sender.model.PersonaEntity;
+import lt.gmail.mail.sender.repository.PersonaRepository;
+
+ 
+@Service
+public class PersonaService {
+     
+    @Autowired
+    PersonaRepository repository;
+     
+    public List<PersonaEntity> getAll()
+    {
+        List<PersonaEntity> list = repository.findAll();
+         
+        if(list.size() > 0) {
+            return list;
+        } else {
+            return new ArrayList<PersonaEntity>();
+        }
+    }
+     
+    public PersonaEntity getById(Long id) throws RecordNotFoundException
+    {
+        Optional<PersonaEntity> entity = repository.findById(id);
+         
+        if(entity.isPresent()) {
+            return entity.get();
+        } else {
+            throw new RecordNotFoundException("No Message record exist for given id");
+        }
+    }
+     
+    public PersonaEntity createOrUpdate(PersonaEntity entity) throws RecordNotFoundException
+    {
+        Optional<PersonaEntity> item = repository.findById(entity.getId());
+         
+        if(item.isPresent())
+        {
+        	PersonaEntity newEntity = item.get();
+            newEntity.setId(entity.getId());
+            newEntity.setName(entity.getName());
+            newEntity.setSureName(entity.getSureName());
+            newEntity.setPhoneNumbers(entity.getPhoneNumbers());
+            
+            newEntity = repository.save(newEntity);
+ 
+            return newEntity;
+        } else {
+            entity = repository.save(entity);
+             
+            return entity;
+        }
+    }
+     
+    public void deleteById(Long id) throws RecordNotFoundException
+    {
+        Optional<PersonaEntity> entity = repository.findById(id);
+         
+        if(entity.isPresent())
+        {
+            repository.deleteById(id);
+        } else {
+            throw new RecordNotFoundException("No Message record exist for given id");
+        }
+    }
+}

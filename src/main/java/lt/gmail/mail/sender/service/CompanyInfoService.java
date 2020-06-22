@@ -99,7 +99,4 @@ public class CompanyInfoService {
 		return repository.searchInRawData(text);
 	}
 
-	public List<CompanyInfoEntity> search(String colum, String text) {
-		return repository.search(colum, text);
-	}
 }
