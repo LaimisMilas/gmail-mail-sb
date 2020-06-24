@@ -20,6 +20,8 @@ public class PersonaEntity {
 	private String sureName;
 	@OneToMany(targetEntity = PhoneNumberEntity.class)
 	private List<PhoneNumberEntity> phoneNumbers = new ArrayList<PhoneNumberEntity>();
+	@OneToMany(targetEntity = EmailEntity.class)
+	private List<EmailEntity> emails = new ArrayList<EmailEntity>();
 
 	public Long getId() {
 		return id;
@@ -53,4 +55,12 @@ public class PersonaEntity {
 		this.phoneNumbers = phoneNumber;
 	}
 
+	public List<EmailEntity> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(List<EmailEntity> emails) {
+		this.emails = emails;
+	}
+	
 }

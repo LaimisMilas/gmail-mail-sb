@@ -50,6 +50,7 @@ public class PersonaService {
             newEntity.setName(entity.getName());
             newEntity.setSureName(entity.getSureName());
             newEntity.setPhoneNumbers(entity.getPhoneNumbers());
+            newEntity.setEmails(entity.getEmails());
             
             newEntity = repository.save(newEntity);
  

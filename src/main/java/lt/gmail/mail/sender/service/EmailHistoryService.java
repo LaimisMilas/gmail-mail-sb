@@ -6,30 +6,30 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lt.gmail.mail.sender.exception.RecordNotFoundException;
-import lt.gmail.mail.sender.model.PhoneNumberEntity;
-import lt.gmail.mail.sender.repository.PhoneNumberRepository;
+import lt.gmail.mail.sender.model.EmailHistoryEntity;
+import lt.gmail.mail.sender.repository.EmailHistoryRepository;
 
 
 @Service
-public class PhoneNumberService {
+public class EmailHistoryService {
 
     @Autowired
-        PhoneNumberRepository repository;
+        EmailHistoryRepository repository;
 
-    public List<PhoneNumberEntity> getAll()
+    public List<EmailHistoryEntity> getAll()
     {
-        List<PhoneNumberEntity> list = repository.findAll();
+        List<EmailHistoryEntity> list = repository.findAll();
 
         if(list.size() > 0) {
             return list;
         } else {
-            return new ArrayList<PhoneNumberEntity>();
+            return new ArrayList<EmailHistoryEntity>();
         }
     }
 
-    public PhoneNumberEntity getById(Long id) throws RecordNotFoundException
+    public EmailHistoryEntity getById(Long id) throws RecordNotFoundException
 {
-    Optional<PhoneNumberEntity> entity = repository.findById(id);
+    Optional<EmailHistoryEntity> entity = repository.findById(id);
 
     if(entity.isPresent()) {
     return entity.get();
@@ -38,15 +38,14 @@ public class PhoneNumberService {
 }
 }
 
-public PhoneNumberEntity createOrUpdate(PhoneNumberEntity entity) throws RecordNotFoundException
+public EmailHistoryEntity createOrUpdate(EmailHistoryEntity entity) throws RecordNotFoundException
 {
-    Optional<PhoneNumberEntity> item = repository.findById(entity.getId());
+    Optional<EmailHistoryEntity> item = repository.findById(entity.getId());
     if(item.isPresent())
     {
-        PhoneNumberEntity newEntity = item.get();
+        EmailHistoryEntity newEntity = item.get();
         newEntity.setId(entity.getId());
-        newEntity.setNumber(entity.getNumber());
-        newEntity.setOperator(entity.getOperator());
+        newEntity.setText(entity.getText());
         newEntity = repository.save(newEntity);
         return newEntity;
     } else {
@@ -57,7 +56,7 @@ public PhoneNumberEntity createOrUpdate(PhoneNumberEntity entity) throws RecordN
 
 public void deleteById(Long id) throws RecordNotFoundException
 {
-    Optional<PhoneNumberEntity> entity = repository.findById(id);
+    Optional<EmailHistoryEntity> entity = repository.findById(id);
 
     if(entity.isPresent())
     {
