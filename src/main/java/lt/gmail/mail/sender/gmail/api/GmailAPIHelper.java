@@ -1,16 +1,5 @@
 package lt.gmail.mail.sender.gmail.api;
 
-import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
-import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.Gmail.Users;
-import com.google.api.services.gmail.Gmail.Users.GetProfile;
-import com.google.api.services.gmail.Gmail.Users.Settings;
-import com.google.api.services.gmail.Gmail.Users.Settings.SendAs;
-import com.google.api.services.gmail.Gmail.Users.Settings.SendAs.Get;
-import com.google.api.services.gmail.Gmail.Users.Settings.SendAs.List;
-import com.google.api.services.gmail.model.Draft;
-import com.google.api.services.gmail.model.Message;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +15,13 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
+import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.Gmail.Users.GetProfile;
+import com.google.api.services.gmail.Gmail.Users.Settings.SendAs;
+import com.google.api.services.gmail.model.Draft;
+import com.google.api.services.gmail.model.Message;
 
 public class GmailAPIHelper {
 
