@@ -3,52 +3,48 @@ package lt.gmail.mail.sender.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import lt.gmail.mail.sender.service.UserService;
+import lt.gmail.mail.sender.filter.JwtRequestFilter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	AppAuthentication appAuthentication;
-
-	@Autowired
-	AppSecurityContext appSecurityContext;
-
-	@Autowired
-	UserService userService;
+	JwtRequestFilter jwtRequestFilter;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		System.out.println("WebSecurityConfig.passwordEncoder");
 		return new BCryptPasswordEncoder(11);
 	}
+	
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	} 
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+		.csrf().disable()
+		.formLogin().disable()
 		.authorizeRequests()
-	    .antMatchers("/api/**").access("hasAnyAuthority('ADMIN')")
-	    .antMatchers("/auth/**").anonymous()
-	    .antMatchers("/**").anonymous()
-	    .anyRequest().fullyAuthenticated()
-		.and()
-		.userDetailsService(userService)
-		.authenticationProvider(appAuthentication)
-		.securityContext()
-		.securityContextRepository(appSecurityContext)
+		.antMatchers("/auth/**").permitAll()
+	    .antMatchers("/**").permitAll()
+	    .anyRequest()
+	    .authenticated()
 		.and()
 		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-		.and()
-		.csrf().disable()
-		.formLogin().disable();
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }

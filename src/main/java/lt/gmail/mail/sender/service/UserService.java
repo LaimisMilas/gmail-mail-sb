@@ -4,21 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import lt.gmail.mail.sender.exception.RecordNotFoundException;
 import lt.gmail.mail.sender.model.UserEntity;
 import lt.gmail.mail.sender.repository.UserRepository;
-import lt.gmail.mail.sender.security.AppAuthentication;
 import lt.gmail.mail.sender.security.JwtTokenProvider;
 
 @Service
@@ -34,7 +32,7 @@ public class UserService implements UserDetailsService {
 	JwtTokenProvider tokenProvider;
 	
 	@Autowired
-	AppAuthentication appAuthentication;
+	AuthenticationManager authenticationManager;
 
 	public List<UserEntity> getAll() {
 		List<UserEntity> list = repository.findAll();
@@ -98,32 +96,28 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("******** UserService.loadUserByUsername");
 		UserEntity ud = repository.findByUserName(username);
 		return ud;
 	}
 
-	public String login(String username, String password) {
-		System.out.println("******** UserService.login");
-		String result = null;
-		UserEntity user = repository.findByUserName(username);
-		System.out.println("******** login is founded: " + user == null);
-		boolean matche = true;
-		matche = passwordEncoder.matches(password, user.getPassword());
-		if (matche) {
-			System.out.println("******** password matches");
-			result = tokenProvider.generateToken(user);
-			System.out.println("******** generateToken: " + result != null);
-			if(result != null && !result.isEmpty()) {
-				SecurityContext securityContext = SecurityContextHolder.getContext();
-				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-						result, result);
-				Authentication auth = appAuthentication.authenticate(authenticationToken);
-				securityContext.setAuthentication(auth);
-			}
+	public String login(String username, String password) throws Exception {		
+		try{
+			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+					username, password);
+			authenticationManager.authenticate(authenticationToken);
+				
+		} catch (BadCredentialsException e) {
+			throw new Exception("Incorrect username or password", e);
 		}
-		return result;
-	}
+		
+		final UserDetails userDetails = this.loadUserByUsername(username);  		
+		
+		UserEntity userEntity = repository.findByUserName(userDetails.getUsername());
+		
+		final String jwt = tokenProvider.createToken(userEntity);
+		
+		return jwt;
+	};
 
 	public UserEntity getCurrentUser() {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
