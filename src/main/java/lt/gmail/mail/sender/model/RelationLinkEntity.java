@@ -23,6 +23,8 @@ public class RelationLinkEntity {
     private Long personaId;
     @Column(name="company_id")
     private Long companyId;
+    @Column(name="friend_id")
+    private Long friendId;
     
     public Long getId(){
         return id;
@@ -59,4 +61,14 @@ public class RelationLinkEntity {
     public void setCompanyId(Long companyId){
         this.companyId = companyId;
     }
+
+	public Long getFriendId() {
+		return friendId;
+	}
+
+	public void setFriendId(Long friendId) {
+		this.friendId = friendId;
+	}
+    
+    
 }

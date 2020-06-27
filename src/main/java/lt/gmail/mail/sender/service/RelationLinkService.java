@@ -49,6 +49,7 @@ public RelationLinkEntity createOrUpdate(RelationLinkEntity entity) throws Recor
         newEntity.setPhoneId(entity.getPhoneId());
         newEntity.setPersonaId(entity.getPersonaId());
         newEntity.setCompanyId(entity.getCompanyId());
+        newEntity.setFriendId(entity.getFriendId());
         newEntity = repository.save(newEntity);
         return newEntity;
     } else {
