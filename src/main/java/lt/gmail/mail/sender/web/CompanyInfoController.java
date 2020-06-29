@@ -47,7 +47,7 @@ public class CompanyInfoController {
 		return new ResponseEntity<List<CompanyInfoEntity>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 	
-	@RequestMapping("/company/info/search/rawData/{address}")
+	@RequestMapping("/company/info/search/rawData/{text}")
 	public ResponseEntity<List<CompanyInfoEntity>> searchInRawData(@PathVariable("text") String text) {
 		List<CompanyInfoEntity> list = service.searchInRawData(text);
 		return new ResponseEntity<List<CompanyInfoEntity>>(list, new HttpHeaders(), HttpStatus.OK);
