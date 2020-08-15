@@ -33,18 +33,25 @@ public class SendRegController {
 		return new ResponseEntity<List<SendRegEntity>>(list, new HttpHeaders(), HttpStatus.OK);
 	}
 
+	@RequestMapping("/send/regs/last/24/{id}")
+	public ResponseEntity<List<SendRegEntity>> allIn24Hours(@PathVariable Long id) throws RecordNotFoundException {
+		List<SendRegEntity> list = service.allIn24Hours(id);
+
+				return new ResponseEntity<List<SendRegEntity>>(list, new HttpHeaders(), HttpStatus.OK);
+			}
+	
+	@RequestMapping("/send/getByIdregs/search/{logKey}")
+	public ResponseEntity<List<SendRegEntity>> getByKey(@PathVariable String logKey) throws RecordNotFoundException {
+		List<SendRegEntity> entity = service.seachInLogs(logKey);
+
+		return new ResponseEntity<List<SendRegEntity>>(entity, new HttpHeaders(), HttpStatus.OK);
+	}
+
 	@RequestMapping("/send/regs/{id}")
 	public ResponseEntity<SendRegEntity> getById(@PathVariable Long id) throws RecordNotFoundException {
 		SendRegEntity entity = service.getById(id);
 
 		return new ResponseEntity<SendRegEntity>(entity, new HttpHeaders(), HttpStatus.OK);
-	}
-	
-	@RequestMapping("/send/regs/search/{logKey}")
-	public ResponseEntity<List<SendRegEntity>> getByKey(@PathVariable String logKey) throws RecordNotFoundException {
-		List<SendRegEntity> entity = service.seachInLogs(logKey);
-
-		return new ResponseEntity<List<SendRegEntity>>(entity, new HttpHeaders(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/send/regs", consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -31,7 +31,6 @@ public class SendRegEntity {
 	@Column(name="message")
 	private String message;
 	
-	@CreatedDate
 	@Column(name = "created")
 	private Date created;
 

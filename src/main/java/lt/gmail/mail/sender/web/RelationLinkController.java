@@ -22,38 +22,39 @@ import lt.gmail.mail.sender.service.RelationLinkService;
 @RequestMapping("/api")
 public class RelationLinkController {
 
-    @Autowired
-    RelationLinkService service;
+	@Autowired
+	RelationLinkService service;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/relation/links")
-    public ResponseEntity<List<RelationLinkEntity>> getAll() {
-        List<RelationLinkEntity> list = service.getAll();
+	@RequestMapping(method = RequestMethod.GET, value = "/relation/links")
+	public ResponseEntity<List<RelationLinkEntity>> getAll() {
+		List<RelationLinkEntity> list = service.getAll();
 
-        return new ResponseEntity<List<RelationLinkEntity>>(list, new HttpHeaders(), HttpStatus.OK);
-    }
+		return new ResponseEntity<List<RelationLinkEntity>>(list, new HttpHeaders(), HttpStatus.OK);
+	}
 
-    @RequestMapping(method = RequestMethod.GET, value = "/relation/links/{id}")
-    public ResponseEntity<RelationLinkEntity> getById(@PathVariable("id") Long id) throws RecordNotFoundException {
-    RelationLinkEntity entity = service.getById(id);
+	@RequestMapping(method = RequestMethod.GET, value = "/relation/links/{id}")
+	public ResponseEntity<RelationLinkEntity> getById(@PathVariable("id") Long id) throws RecordNotFoundException {
+		RelationLinkEntity entity = service.getById(id);
 
-    return new ResponseEntity<RelationLinkEntity>(entity, new HttpHeaders(), HttpStatus.OK);
-}
+		return new ResponseEntity<RelationLinkEntity>(entity, new HttpHeaders(), HttpStatus.OK);
+	}
 
-@RequestMapping(method = RequestMethod.POST, value = "/relation/links", consumes = MediaType.APPLICATION_JSON_VALUE)
-public ResponseEntity<RelationLinkEntity> create(@RequestBody RelationLinkEntity enity) throws RecordNotFoundException {
-    RelationLinkEntity updated = service.createOrUpdate(enity);
-    return new ResponseEntity<RelationLinkEntity>(updated, new HttpHeaders(), HttpStatus.OK);
-}
+	@RequestMapping(method = RequestMethod.POST, value = "/relation/links", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<RelationLinkEntity> create(@RequestBody RelationLinkEntity enity)
+			throws RecordNotFoundException {
+		RelationLinkEntity updated = service.createOrUpdate(enity);
+		return new ResponseEntity<RelationLinkEntity>(updated, new HttpHeaders(), HttpStatus.OK);
+	}
 
-@RequestMapping(method = RequestMethod.PUT, value = "/relation/links", consumes = MediaType.APPLICATION_JSON_VALUE)
-public void update(@RequestBody RelationLinkEntity enity) throws RecordNotFoundException {
-    service.createOrUpdate(enity);
-}
+	@RequestMapping(method = RequestMethod.PUT, value = "/relation/links", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void update(@RequestBody RelationLinkEntity enity) throws RecordNotFoundException {
+		service.createOrUpdate(enity);
+	}
 
-@DeleteMapping("/relation/links/{id}")
-public HttpStatus deleteById(@PathVariable("id") Long id) throws RecordNotFoundException {
-    service.deleteById(id);
-    return HttpStatus.FORBIDDEN;
-}
+	@DeleteMapping("/relation/links/{id}")
+	public HttpStatus deleteById(@PathVariable("id") Long id) throws RecordNotFoundException {
+		service.deleteById(id);
+		return HttpStatus.FORBIDDEN;
+	}
 
 }

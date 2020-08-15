@@ -197,14 +197,14 @@ public class CompaignManageService {
 
 	public String senderManagerStatus() {
 		String result = "";
-		result = result + "Compaigns itemsCF size: " + itemsCF.size();
-		result = result + ", Compaigns itemsCF keySet: " + itemsCF.keySet();
+		result = result + "Compaigns 'itemsCF' size: " + itemsCF.size();
+		result = result + ", itemsCF keySet: " + itemsCF.keySet();
 		for (Entry<Long, Gmail> gmailService : gmailServices.entrySet()) {
 			result = result + (", GmailAPISetting Id: " + gmailService.getKey());
 		}
 		for (Entry<Long, String> entry : itemsCFLogs.entrySet()) {
-			entry.getValue();
-		}	
+			result = result+ " " + entry.getValue();
+		}
 		return result;
 	}
 }

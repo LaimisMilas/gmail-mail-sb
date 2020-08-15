@@ -1,6 +1,7 @@
 package lt.gmail.mail.sender.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,17 @@ public class SendRegService {
             throw new RecordNotFoundException("No Message record exist for given id");
         }
     }
+    
+    public List<SendRegEntity> allIn24Hours(Long id) throws RecordNotFoundException
+    {
+    	long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
+    	long time = new Date().getTime() - MILLIS_PER_DAY;
+    	Date before24 = new Date();
+    	before24.setTime(time);
+    	
+        List<SendRegEntity> entitys = repository.allInInterval(id, before24, new Date());
+        return entitys;
+    }
      
     public SendRegEntity createOrUpdate(SendRegEntity entity) throws RecordNotFoundException
     {
@@ -55,8 +67,8 @@ public class SendRegService {
  
             return newEntity;
         } else {
-            entity = repository.save(entity);
-             
+        	entity.setCreated(new Date());
+        	entity = repository.save(entity);
             return entity;
         }
     }

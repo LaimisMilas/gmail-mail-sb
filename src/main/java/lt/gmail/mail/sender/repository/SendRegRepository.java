@@ -1,5 +1,6 @@
 package lt.gmail.mail.sender.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,8 @@ public interface SendRegRepository
 	
 	@Query("SELECT t FROM SendRegEntity t WHERE t.companyCode = ?1 ")
 	List<SendRegEntity> selectAllByCompanyCode(String companyCode);
-	
+
+	@Query("SELECT t FROM SendRegEntity t WHERE t.compaignId = ?1 and t.created > ?2 and t.created <= ?3")
+	List<SendRegEntity> allInInterval(Long compaignId, Date dateTrom, Date dateTo);
+
 }

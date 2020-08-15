@@ -1,6 +1,7 @@
 package lt.gmail.mail.sender.gmail.send.email;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import com.google.api.services.gmail.Gmail;
@@ -156,6 +157,7 @@ public class SendToCompanysViaGmail implements Runnable {
 
 						SendRegEntity sendReg = new SendRegEntity();
 						sendReg.setCompaignId(compaignId);
+						sendReg.setCreated(new Date());
 						sendReg.setCompanyCode(companyCode);
 						sendReg.setLogs(logKey + " " + companyInfoEmail +" companyInfoId "+ companyInfoId);
 						sendReg.setMessage(response.toPrettyString());
