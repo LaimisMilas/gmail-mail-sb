@@ -94,6 +94,12 @@ public class SendToCompanysViaGmail implements Runnable {
 						status = "Stoped by limit";
 						break;
 					}
+					
+					if (isInGmailLimits(compaignId)) {
+						status = "Stoped by limit";
+						stop = true;
+						break;
+					}
 
 					if (lookIsInBlackList && isInBlackList(companyCode)) {
 						System.out.println("*** Rejected isInBlackList id: " + companyInfoId + " companyCode:" + companyCode);
@@ -175,6 +181,10 @@ public class SendToCompanysViaGmail implements Runnable {
 			status = "Stoped by error";
 			e.printStackTrace();
 		}
+	}
+
+	private boolean isInGmailLimits(Long compaignId) {
+		return sendValidator.isInGmailLimits(compaignId);
 	}
 
 	private boolean isSendedByMail(String email, String logKey) {

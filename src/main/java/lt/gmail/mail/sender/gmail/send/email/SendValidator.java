@@ -1,5 +1,6 @@
 package lt.gmail.mail.sender.gmail.send.email;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,17 @@ public class SendValidator {
 			result = false;
 		}
 		return result;
+	}
+
+	public boolean isInGmailLimits(Long compaignId) {
+		
+		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
+    	long time = new Date().getTime() - MILLIS_PER_DAY;
+    	Date before24 = new Date();
+    	before24.setTime(time);
+		
+		List<SendRegEntity> list = sendRegRepository.allInInterval(compaignId, before24, new Date());
+		return list.size() >= 300;
 	}
 
 }
