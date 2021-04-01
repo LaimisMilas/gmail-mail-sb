@@ -94,7 +94,7 @@ public class SendValidator {
 		return result;
 	}
 
-	public boolean isInGmailLimits(Long compaignId) {
+	public boolean isInGmailLimits(Long compaignId, int limit) {
 		
 		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
     	long time = new Date().getTime() - MILLIS_PER_DAY;
@@ -102,7 +102,7 @@ public class SendValidator {
     	before24.setTime(time);
 		
 		List<SendRegEntity> list = sendRegRepository.allInInterval(compaignId, before24, new Date());
-		return list.size() >= 300;
+		return list.size() >= limit;
 	}
 
 }

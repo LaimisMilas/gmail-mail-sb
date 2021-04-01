@@ -20,6 +20,7 @@ public class SendToCompanysViaGmail implements Runnable {
 	Gmail service;
 	List<CompanyInfoEntity> companyInfos;
 	Long compaignId;
+	String threadName = "";
 	String sendFrom = "me";
 	String subjectLine;
 	String emailContent;
@@ -48,6 +49,8 @@ public class SendToCompanysViaGmail implements Runnable {
 
 		try {
 			
+			threadName = compaignId + "/" + logKey + "/" + new Date().toString(); 
+					
 			status = "Running";
 			
 			while(runTest) {
@@ -81,22 +84,24 @@ public class SendToCompanysViaGmail implements Runnable {
 				String companyCode = null;
 				String companyInfoEmail = null;
 				Message response = null;
-
+				
 				try {
 
 					company = this.companyInfos.get(a);
+
+					printReaport(company, sendGmailAPI);
 
 					companyInfoId = company.getId();
 					companyCode = company.getCompanyCode();
 					companyInfoEmail = company.getEmail();
 
 					if (lookForLimits && counter > limit) {
-						status = "Stoped by limit";
+						status = "Stoped by limit, counter: " + counter + ", limit: " + limit;
 						break;
 					}
 					
-					if (isInGmailLimits(compaignId)) {
-						status = "Stoped by limit";
+					if (isInGmailLimits(compaignId, limit)) {
+						status = "Stoped by Gmail limit's limit: " + limit;
 						stop = true;
 						break;
 					}
@@ -173,7 +178,9 @@ public class SendToCompanysViaGmail implements Runnable {
 				} catch (Exception e) {
 					System.out.println("*** Exception to company: " + companyCode + " id: " + companyInfoId + " Email: " + companyInfoEmail);
 					status = "Stoped by error";
+					stop = true;
 					e.printStackTrace();
+					break;
 				}
 			}
 
@@ -183,8 +190,20 @@ public class SendToCompanysViaGmail implements Runnable {
 		}
 	}
 
-	private boolean isInGmailLimits(Long compaignId) {
-		return sendValidator.isInGmailLimits(compaignId);
+	private void printReaport(CompanyInfoEntity company, GmailAPIImpl sendGmailAPI) {
+		StringBuffer report = new StringBuffer();
+		report.append("Reaport " + threadName);
+		report.append(" company: " + company.getTitle());
+		report.append(" status: " + status);	 	
+		report.append(" counter: " + counter);
+		report.append(" limit: " + limit);
+		report.append(" logKey: " + logKey);
+		report.append(" timeToWait: " + timeToWait);
+		System.out.println(report.toString());		
+	}
+
+	private boolean isInGmailLimits(Long compaignId, int limit) {
+		return sendValidator.isInGmailLimits(compaignId, limit);
 	}
 
 	private boolean isSendedByMail(String email, String logKey) {

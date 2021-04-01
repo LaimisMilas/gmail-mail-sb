@@ -1,6 +1,8 @@
 package lt.gmail.mail.sender.gmail.api;
 
 import java.io.File;
+import java.io.IOException;
+
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
 
@@ -11,7 +13,7 @@ public class GmailAPIImpl {
 	private String emailContent;
 	private File attachement;
 
-
+ 
 	public Gmail getService() {
 		return this.service;
 	}
@@ -20,9 +22,8 @@ public class GmailAPIImpl {
 		this.service = service;
 	}
 
-	public Message send(String sendTo, String sendFrom, String htmlContent) {
+	public Message send(String sendTo, String sendFrom, String htmlContent) throws Exception, IOException{
 		Message result = null;
-		try {
 
 			Message content = GmailAPIHelper.createHTMLEmail(sendFrom, sendTo, subject, htmlContent, attachement);
 
@@ -32,10 +33,6 @@ public class GmailAPIImpl {
 
 				System.out.println(result.toString());
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 		return result;
 	}
