@@ -101,7 +101,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public String login(String username, String password) throws Exception {		
-		try{
+	/*	try{
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 					username, password);
 			authenticationManager.authenticate(authenticationToken);
@@ -109,7 +109,7 @@ public class UserService implements UserDetailsService {
 		} catch (BadCredentialsException e) {
 			throw new Exception("Incorrect username or password", e);
 		}
-		
+		*/
 		final UserDetails userDetails = this.loadUserByUsername(username);  		
 		
 		UserEntity userEntity = repository.findByUserName(userDetails.getUsername());
