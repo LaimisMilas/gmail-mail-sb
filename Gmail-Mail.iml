@@ -33,6 +33,7 @@
     <orderEntry type="module" module-name="storage-module" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.19" level="project" />
     <orderEntry type="library" name="Maven: org.mariadb.jdbc:mariadb-java-client:2.4.4" level="project" />
+    <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.2.10" level="project" />
     <orderEntry type="library" name="Maven: org.jooq:jooq-meta:3.12.4" level="project" />
     <orderEntry type="library" name="Maven: org.jooq:jooq:3.12.4" level="project" />
     <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.3" level="project" />
