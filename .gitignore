@@ -1,6 +1,8 @@
 /bin/
-.idea
+/.idea
+/.idea/*
 target
 /*.iml
 .classpath
 .project
+/src/main/front-side/node_modules/

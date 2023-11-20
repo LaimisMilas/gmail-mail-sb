@@ -1,0 +1,77 @@
+
+.rule-builder-container ul{
+    list-style-type: none
+}
+.rule-builder-container ul li{
+    height: 30px;
+    text-decoration: none;
+}
+
+.rule-builder-delete-line{
+    border: 1px solid darkviolet;
+    padding: 6px;
+    background-color: pink;
+    float: right;
+}
+
+.rule-builder-add-line button{
+    border: 1px solid darkviolet;
+    padding: 6px;
+    background-color: pink;
+    float: right;
+}
+
+.rule-builder-line{
+    border: solid 1px;
+}
+
+.rule-builder-container{
+    right: 0;
+    position: fixed;
+    z-index: 1000000000;
+    top: 50px;
+    background: beige;
+    width: 380px;
+}
+
+.rule-builder-target-dropDown{
+    width: 90px;
+    height: 25px;
+}
+
+.rule-builder-operator-dropDown{
+    width: 60px;
+    height: 25px;
+}
+
+.rule-builder-intent-dropDown{
+    width: 100px;
+    height: 25px;
+}
+
+.rule-builder-line-confidence{
+    width: 30px;
+    height: 25px;
+}
+
+.exit-button{
+    float: right;
+}
+
+.apply-rule{
+    float: right;
+    border: 1px solid darkviolet;
+    background-color: #9db88f;
+    padding: 6px;
+    width: 60px;
+}
+.rule-builder-line-action{
+    display: block;
+    width: 75px;
+    float: left; 
+}
+.rule-builder-line-conjunction{
+    display: block;
+    width: 15px;
+    float: left;
+}

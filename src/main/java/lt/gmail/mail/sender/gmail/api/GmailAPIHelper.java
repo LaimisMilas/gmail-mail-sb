@@ -16,7 +16,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.Gmail.Users.GetProfile;
 import com.google.api.services.gmail.Gmail.Users.Settings.SendAs;
