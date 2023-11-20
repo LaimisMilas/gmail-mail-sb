@@ -17,7 +17,6 @@ import lt.gmail.mail.sender.model.UserEntity;
 import lt.gmail.mail.sender.model.UserRoleEntity;
 import lt.gmail.mail.sender.security.AuthRequest;
 import lt.gmail.mail.sender.security.AuthResponse;
-import lt.gmail.mail.sender.security.JwtTokenProvider;
 import lt.gmail.mail.sender.service.UserRoleService;
 import lt.gmail.mail.sender.service.UserService;
 

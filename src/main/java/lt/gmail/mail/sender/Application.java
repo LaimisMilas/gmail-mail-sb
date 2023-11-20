@@ -27,7 +27,8 @@ public class Application {
         return new Docket(DocumentationType.SWAGGER_2)  
           .select()                                  
 //          .apis(RequestHandlerSelectors.basePackage("lt.gmail.mail.sender"))              
-          .paths(PathSelectors.ant("/api/*"))                        
+     //     .paths(PathSelectors.ant("/api/*"))        
+			.paths(PathSelectors.any())
           .build()
           .apiInfo(new ApiInfo(
         		  "Gmai-mail", 

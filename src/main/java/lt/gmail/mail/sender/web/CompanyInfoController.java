@@ -2,6 +2,7 @@ package lt.gmail.mail.sender.web;
 
 import java.util.List;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import lt.gmail.mail.sender.service.CompanyInfoService;
 @Controller
 @RestController
 @RequestMapping("/api")
+@Api(tags = "company-api", description = "Aprašymas")
 public class CompanyInfoController {
 	
 	@Autowired
